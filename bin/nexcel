@@ -1,0 +1,33 @@
+#!/usr/bin/env node
+const program = require('commander')
+const { resolve } = require('path')
+
+const res = command => resolve(__dirname, '../commands/', command)
+
+program
+  .version(require('../package').version )
+
+program
+  .usage('<command>')
+
+program
+  .command('write')
+  .description('write data into excel')
+  .alias('w')
+  .action(() => {
+    require(res('write'))
+  })
+
+program
+  .command('read')
+  .description('read excel data')
+  .alias('r')
+  .action(() => {
+    require(res('read'))
+  })
+
+program.parse(process.argv)
+
+if(!program.args.length){
+  program.help()
+}
